@@ -216,3 +216,8 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Ajustes para a pasta Backend
+backend/.env
+backend/venv/
+backend/.venv
