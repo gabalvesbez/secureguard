@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 class Utilizador(Base):
-    __tablename__ = "utilizadores"
+    __tablename__ = "users"
 
     id = Column(Integer, primary_key=True, index=True)
     nome = Column(String(100), nullable=False)
@@ -21,7 +21,7 @@ class LogAuditoria(Base):
     __tablename__ = "logs_auditoria"
 
     id = Column(Integer, primary_key=True, index=True)
-    utilizador_id = Column(Integer, ForeignKey("utilizadores.id", ondelete="CASCADE"), nullable=False)
+    utilizador_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     acao = Column(String(100), nullable=False)  # ex: "login_sucesso", "tentativa_login_falhada", "remover_utilizador"
     detalhes = Column(String(255), nullable=True)  # ex: "IP: 192.168.1.1"
     criado_em = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
