@@ -15,6 +15,7 @@ class Utilizador(Base):
 
     # Relacionamento: Um utilizador pode ter muitos logs de auditoria
     logs = relationship("LogAuditoria", back_populates="utilizador", cascade="all, delete-orphan")
+    segredos = relationship("Segredo", back_populates="utilizador", cascade="all, delete-orphan")
 
 
 class LogAuditoria(Base):
@@ -28,3 +29,18 @@ class LogAuditoria(Base):
 
     # Relacionamento: Vincula o log de volta ao utilizador específico
     utilizador = relationship("Utilizador", back_populates="logs")
+
+class Segredo(Base):
+    __tablename__ = "segredos"
+
+    id = Column(Integer, primary_key=True, index=True)
+    titulo = Column(String(100), nullable=False)       # ex: "Password do Wi-Fi", "API Key Stripe"
+    servico = Column(String(100), nullable=False)      # ex: "Google", "AWS", "Roteador"
+    valor_segredo = Column(String(500), nullable=False) # O segredo em si (que depois iremos encriptar)
+    criado_em = Column(DateTime, default=lambda: datetime.now(timezone.utc), nullable=False)
+    
+    # Chave estrangeira que diz a quem pertence este segredo
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+
+    # Relacionamento: Vincula o segredo de volta ao utilizador específico
+    utilizador = relationship("Utilizador", back_populates="segredos")
