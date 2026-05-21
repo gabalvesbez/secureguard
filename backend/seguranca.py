@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 import models
 from database import get_db
 from passlib.context import CryptContext
+from cryptography.fernet import Fernet
 
 # Configura o contexto de criptografia para usar exclusivamente o bcrypt
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -84,3 +85,19 @@ def obter_utilizador_atual(token: str = Depends(oauth2_scheme), db: Session = De
         
     # 3. Retorna o utilizador verificado com sucesso
     return utilizador
+
+CHAVE_MESTRA = os.getenv("CHAVE_ENCRIPCACAO")
+# Inicializa o motor de encriptação se a chave existir
+fernet = Fernet(CHAVE_MESTRA.encode()) if CHAVE_MESTRA else None
+
+def encriptar_texto(texto: str) -> str:
+    """Transforma texto limpo em hash ilegível."""
+    if not fernet:
+        return texto
+    return fernet.encrypt(texto.encode()).decode()
+
+def decriptar_texto(texto_encriptado: str) -> str:
+    """Transforma o hash ilegível de volta em texto limpo."""
+    if not fernet:
+        return texto_encriptado
+    return fernet.decrypt(texto_encriptado.encode()).decode()

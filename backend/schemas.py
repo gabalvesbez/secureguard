@@ -2,6 +2,8 @@ import re
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from datetime import datetime
 from typing import Optional, List
+from pydantic import BaseModel
+from datetime import datetime
 
 # ==========================================
 # SCHEMAS DE LOGS DE AUDITORIA
@@ -56,3 +58,21 @@ class UtilizadorResponse(UtilizadorBase):
 
 class UtilizadorCompletoResponse(UtilizadorResponse):
     logs: List[LogAuditoriaResponse] = []
+
+
+# O que o utilizador envia ao criar um segredo
+class SegredoCriar(BaseModel):
+    titulo: str
+    servico: str
+    valor_segredo: str
+
+# O que a API devolve ao utilizador (Sem expor IDs desnecessários ou dados crus)
+class SegredoResposta(BaseModel):
+    id: int
+    titulo: str
+    servico: str
+    valor_segredo: str
+    criado_em: datetime
+
+    class Config:
+        from_attributes = True
