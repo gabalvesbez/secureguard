@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordRequestForm # <- NOVO
+from fastapi.security import OAuth2PasswordRequestForm 
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 import crud
 import schemas
@@ -14,6 +15,21 @@ app = FastAPI(
     title="SecureGuard API",
     description="Sistema Avançado de Gestão de Segredos e Auditoria",
     version="1.0.0"
+)
+
+origins = [
+    "http://127.0.0.1:5500",  # Endereço padrão do Live Server do VS Code
+    "http://localhost:5500",
+    "http://127.0.0.1:8000",  # O próprio Swagger
+]
+
+# Injetar o middleware de CORS na aplicação
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,            # Permite requisições destes sites
+    allow_credentials=True,
+    allow_methods=["*"],              # Permite todos os métodos (GET, POST, DELETE, etc.)
+    allow_headers=["*"],              # Permite todos os cabeçalhos (incluindo o Authorization!)
 )
 
 @app.post(
