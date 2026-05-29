@@ -11241,3 +11241,24 @@ body {
   font-size: 0.75rem;
   border-radius: 0.375rem !important;
 }
+
+
+.icone-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    font-size: 1.2rem;
+    
+    /* ESTAS DUAS LINHAS SÃO A CHAVE: */
+    z-index: 9999 !important;      /* Força o olho a ficar à frente de TUDO */
+    pointer-events: auto !important; /* Força o navegador a aceitar o clique */
+    
+    transition: color 0.2s ease;
+}
+
+.icone-password:hover {
+    color: #495057;
+}
