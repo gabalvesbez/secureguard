@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             // Repare na ligação: Mandamos a requisição para a rota /secrets do Python
             // Mas precisamos passar o Token no cabeçalho (Authorization) para provar quem somos!
-            const response = await fetch('http://127.0.0.1:8000/secrets', {
+            const response = await fetch('https://secureguard-fyln.onrender.com/secrets', {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         };
 
         try {
-            const response = await fetch('http://127.0.0.1:8000/secrets', {
+            const response = await fetch('https://secureguard-fyln.onrender.com/secrets', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -137,29 +137,38 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // -------------------------------------------------------------------------
-    // LÓGICA AUXILIAR: INTERRUPTOR DO OLHO NA TABELA
-    // -------------------------------------------------------------------------
     function configurarBotoesOlho() {
-        const botoes = document.querySelectorAll('.btn-ver-segredo');
-        botoes.forEach(botao => {
-            botao.addEventListener('click', () => {
-                const inputPassword = botao.parentElement.querySelector('input');
-                const icone = botao.querySelector('i');
-                
-                if (inputPassword.type === 'password') {
-                    inputPassword.type = 'text';
+    const botoes = document.querySelectorAll('.btn-ver-segredo');
+    botoes.forEach(botao => {
+        botao.addEventListener('click', () => {
+            // Procura o input de password que está perto deste botão
+            const inputPassword = botao.parentElement ? botao.parentElement.querySelector('input') : null;
+            const icone = botao.querySelector('i');
+            
+            // BABY STEP DE SEGURANÇA: Se o input não for encontrado, não faz nada e evita o erro fatal!
+            if (!inputPassword) {
+                console.warn("Aviso: Input de password não encontrado para este botão.");
+                return;
+            }
+
+            if (inputPassword.type === 'password') {
+                inputPassword.type = 'text';
+                // Só altera a classe se o ícone realmente existir
+                if (icone) {
                     icone.classList.remove('fa-eye');
                     icone.classList.add('fa-eye-slash');
-                } else {
-                    inputPassword.type = 'password';
+                }
+            } else {
+                inputPassword.type = 'password';
+                // Só altera a classe se o ícone realmente existir
+                if (icone) {
                     icone.classList.remove('fa-eye-slash');
                     icone.classList.add('fa-eye');
                 }
-            });
+            }
         });
-    }
-
+    });
+}
     // -------------------------------------------------------------------------
     // LÓGICA AUXILIAR: ELIMINAR UM SEGREDO (DELETE)
     // -------------------------------------------------------------------------
@@ -171,7 +180,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 
                 if (confirm("Tem certeza que deseja eliminar permanentemente este segredo?")) {
                     try {
-                        const response = await fetch(`http://127.0.0.1:8000/secrets/${idSegredo}`, {
+                        const response = await fetch(`https://secureguard-fyln.onrender.com/secrets/${idSegredo}`, {
                             method: 'DELETE',
                             headers: {
                                 'Authorization': `Bearer ${token}`
