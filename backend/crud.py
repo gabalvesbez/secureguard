@@ -60,3 +60,19 @@ def eliminar_segredo(db: Session, segredo_id: int):
         db.delete(segredo)
         db.commit()
     return True
+
+def registrar_log(db: Session, utilizador_id: int, acao: str, detalhes: str = None):
+    """Insere um novo evento de auditoria no banco de dados."""
+    novo_log = models.LogAuditoria(
+        utilizador_id=utilizador_id,
+        acao=acao,
+        detalhes=detalhes
+    )
+    db.add(novo_log)
+    db.commit()
+    db.refresh(novo_log)
+    return novo_log
+
+def listar_logs_do_utilizador(db: Session, utilizador_id: int):
+    """Busca o histórico de ações do usuário logado."""
+    return db.query(models.LogAuditoria).filter(models.LogAuditoria.utilizador_id == utilizador_id).order_by(models.LogAuditoria.criado_em.desc()).all()

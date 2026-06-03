@@ -10,7 +10,7 @@ from database import engine, get_db
 from typing import List
 from seguranca import obter_utilizador_atual 
 
-# Inicializa o FastAPI  (objeto que cria a api e diz nome, descricao e versao)
+# Inicializa o FastAPI (objeto que cria a api e diz nome, descricao e versao)
 app = FastAPI(
     title="SecureGuard API",
     description="Sistema Avançado de Gestão de Segredos e Auditoria",
@@ -31,6 +31,10 @@ app.add_middleware(
     allow_methods=["*"],              # Permite todos os métodos (GET, POST, DELETE, etc.)
     allow_headers=["*"],              # Permite todos os cabeçalhos (incluindo o Authorization!)
 )
+
+# =============================================================================
+# ROTAS DE AUTENTICAÇÃO (LOGIN / REGISTRO)
+# =============================================================================
 
 @app.post(
     "/auth/register", 
@@ -79,29 +83,44 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         "token_type": "bearer"
     }
 
-@app.post("/secrets",
-          response_model=schemas.SegredoResposta,
-          status_code=201,
-          summary="Criar um novo segredo")
+# =============================================================================
+# ROTAS DO COFRE DE SEGREDOS (CRUD)
+# =============================================================================
+
+@app.post(
+    "/secrets",
+    response_model=schemas.SegredoResposta,
+    status_code=status.HTTP_201_CREATED,
+    summary="Criar um novo segredo"
+)
 def rota_criar_segredo(
     segredo: schemas.SegredoCriar, 
     db: Session = Depends(get_db), 
     utilizador_atual: models.Utilizador = Depends(obter_utilizador_atual)
 ):
-    # O user_id é injetado automaticamente a partir do Token JWT decriptado pelo Guardião!
-    return crud.criar_segredo(db=db, segredo=segredo, utilizador_id=utilizador_atual.id)
+    novo_segredo = crud.criar_segredo(db=db, segredo=segredo, utilizador_id=utilizador_atual.id)
+    
+    # REGISTRO DE AUDITORIA
+    crud.registrar_log(db=db, utilizador_id=utilizador_atual.id, acao="criar_segredo", detalhes=f"Criou o segredo: {segredo.titulo} para o serviço {segredo.servico}")
+    
+    return novo_segredo
 
-@app.get("/secrets",
-         response_model=List[schemas.SegredoResposta],
-         summary="Listar segredos do utilizador logado")
+@app.get(
+    "/secrets",
+    response_model=List[schemas.SegredoResposta],
+    summary="Listar segredos do utilizador logado"
+)
 def rota_listar_segredos(
     db: Session = Depends(get_db), 
     utilizador_atual: models.Utilizador = Depends(obter_utilizador_atual)
 ):
-    # Filtro rígido: O utilizador só vê os SEUS próprios segredos
+    # CORREÇÃO: Restaurada a rota GET para o JavaScript conseguir recolher os dados!
     return crud.listar_segredos_do_utilizador(db=db, utilizador_id=utilizador_atual.id)
 
-@app.delete("/secrets/{secret_id}", summary="Eliminar um segredo específico")
+@app.delete(
+    "/secrets/{secret_id}", 
+    summary="Eliminar um segredo específico"
+)
 def rota_eliminar_segredo(
     secret_id: int, 
     db: Session = Depends(get_db), 
@@ -109,13 +128,31 @@ def rota_eliminar_segredo(
 ):
     segredo = crud.obter_segredo_por_id(db, segredo_id=secret_id)
     
-    # 1. Validação de Existência
     if not segredo:
         raise HTTPException(status_code=404, detail="Segredo não encontrado.")
-        
-    # 2. Validação de Propriedade: Segurança Máxima contra ID e-Xternal tampering
+    
     if segredo.user_id != utilizador_atual.id:
-        raise HTTPException(status_code=403, detail="Não tens permissão para eliminar este segredo.")
-        
-    crud.eliminar_segredo(db, segredo_id=secret_id)
-    return {"detail": "Segredo eliminado com sucesso."}
+        raise HTTPException(status_code=403, detail="Não tem permissão para eliminar este segredo.")
+    
+    crud.eliminar_segredo(db=db, segredo_id=secret_id)
+    
+    # REGISTRO DE AUDITORIA
+    crud.registrar_log(db=db, utilizador_id=utilizador_atual.id, acao="deletar_segredo", detalhes=f"Removeu o segredo ID: {secret_id} (Título: {segredo.titulo})")
+    
+    return {"message": "Segredo eliminado com sucesso e evento auditado."}
+
+# =============================================================================
+# ROTAS DE AUDITORIA
+# =============================================================================
+
+@app.get(
+    "/logs", 
+    response_model=List[schemas.LogAuditoriaResponse], 
+    summary="Listar logs de auditoria do utilizador logado"
+)
+def rota_listar_logs(
+    db: Session = Depends(get_db), 
+    utilizador_atual: models.Utilizador = Depends(obter_utilizador_atual)
+):
+    # Retorna o histórico de ações do usuário atual
+    return crud.listar_logs_do_utilizador(db=db, utilizador_id=utilizador_atual.id)
