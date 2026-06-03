@@ -21,6 +21,7 @@ origins = [
     "http://127.0.0.1:5500",  # Endereço padrão do Live Server do VS Code
     "http://localhost:5500",
     "http://127.0.0.1:8000",  # O próprio Swagger
+    "https://secureguard-ohunirhs9-gabriel-a-projects.vercel.app/login.html"
 ]
 
 # Injetar o middleware de CORS na aplicação
