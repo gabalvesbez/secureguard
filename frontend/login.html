@@ -1,70 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Login - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    </head>
-    <body class="bg-primary">
-        <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-5">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Login</h3></div>
-                                    <div class="card-body">
-                                        <form id="formLogin">
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" required />
-                                                <label for="inputEmail">Email address</label>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputPassword" type="password" placeholder="Password" required />
-                                                <label for="inputPassword">Password</label>
-                                            </div>
-                                            <div class="form-check mb-3">
-                                                <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
-                                                <label class="form-check-label" for="inputRememberPassword">Remember Password</label>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                                <a class="small" href="password.html">Forgot Password?</a>
-                                                <button type="submit" class="btn btn-primary">Login</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="register.html">Need an account? Sign up!</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>SecureGuard — Login</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="auth-page">
+ 
+    <div class="auth-container">
+      <div class="auth-card">
+ 
+        <div class="auth-card-header">
+          <div class="auth-logo">
+            <span class="auth-logo-dot"></span>
+            SecureGuard
+          </div>
+          <div class="auth-subtitle">Autenticação Segura</div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="js/login.js"></script>
-    </body>
+ 
+        <div class="auth-card-body">
+          <!-- STATUS LINE -->
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.75rem;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#4ade80;box-shadow:0 0 8px #4ade80;flex-shrink:0;"></div>
+            <span style="font-family:var(--mono);font-size:0.65rem;color:var(--text-3);letter-spacing:0.12em;text-transform:uppercase;">Sistema Operacional — Credenciais Necessárias</span>
+          </div>
+ 
+          <form id="formLogin" autocomplete="off">
+            <div class="mb-3">
+              <div class="form-floating">
+                <input class="form-control" id="inputEmail" type="email" required />
+                <label for="inputEmail">Endereço de Email</label>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="form-floating">
+                <input class="form-control" id="inputPassword" type="password" required />
+                <label for="inputPassword">Palavra-passe</label>
+              </div>
+            </div>
+            <div class="form-check mb-3">
+              <input class="form-check-input" id="inputRememberPassword" type="checkbox" value="" />
+              <label class="form-check-label" for="inputRememberPassword">Manter sessão ativa</label>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:1.5rem;">
+              <a class="small" href="password.html" style="font-family:var(--mono);font-size:0.72rem;color:var(--text-3);transition:color 0.18s;" onmouseover="this.style.color='var(--red-bright)'" onmouseout="this.style.color='var(--text-3)'">Esqueceu a palavra-passe?</a>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-lock-open me-1"></i>Entrar
+              </button>
+            </div>
+          </form>
+        </div>
+ 
+        <div class="auth-card-footer">
+          <a href="register.html">Sem conta? Registe-se aqui</a>
+        </div>
+ 
+      </div>
+ 
+      <!-- footer watermark -->
+      <div style="text-align:center;margin-top:1.5rem;">
+        <span style="font-family:var(--mono);font-size:0.62rem;color:var(--text-3);letter-spacing:0.1em;">© SECUREGUARD 2026 — TODOS OS DIREITOS RESERVADOS</span>
+      </div>
+    </div>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="js/scripts.js"></script>
+    <script src="js/login.js"></script>
+  </body>
 </html>

@@ -1,94 +1,130 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Register - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    </head>
-    <body class="bg-primary">
-        <div id="layoutAuthentication">
-            <div id="layoutAuthentication_content">
-                <main>
-                    <div class="container">
-                        <div class="row justify-content-center">
-                            <div class="col-lg-7">
-                                <div class="card shadow-lg border-0 rounded-lg mt-5">
-                                    <div class="card-header"><h3 class="text-center font-weight-light my-4">Create Account</h3></div>
-                                    <div class="card-body">
-                                        <form id="formRegister">
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputFirstName" type="text" placeholder="Enter your first name" />
-                                                        <label for="inputFirstName">First name</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating">
-                                                        <input class="form-control" id="inputLastName" type="text" placeholder="Enter your last name" />
-                                                        <label for="inputLastName">Last name</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-floating mb-3">
-                                                <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                                <label for="inputEmail">Email address</label>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0 position-relative posicao-container-password">
-                                                        <input class="form-control" id="inputPassword" type="password" placeholder="Create a password" style="padding-right: 45px;" />
-                                                        <label for="inputPassword">Password</label>
-                                                        <button type="button" id="btnMostrarPassword" class="border-0 bg-transparent p-0 icone-password">
-                                                            <i class="fas fa-eye"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputPasswordConfirm" type="password" placeholder="Confirm password" />
-                                                        <label for="inputPasswordConfirm">Confirm Password</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mt-4 mb-0">
-                                                <div class="d-grid">
-                                                    <button type="submit" class="btn btn-primary btn-block">Create Account</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="card-footer text-center py-3">
-                                        <div class="small"><a href="login.html">Have an account? Go to login</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </main>
-            </div>
-            <div id="layoutAuthentication_footer">
-                <footer class="py-4 bg-light mt-auto">
-                    <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-            </div>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>SecureGuard — Criar Conta</title>
+    <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+  </head>
+  <body class="auth-page">
+ 
+    <div class="auth-container wide">
+      <div class="auth-card">
+ 
+        <div class="auth-card-header">
+          <div class="auth-logo">
+            <span class="auth-logo-dot"></span>
+            SecureGuard
+          </div>
+          <div class="auth-subtitle">Criação de Conta — Acesso Protegido</div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
-        <script src="js/register.js"></script>
-    </body>
+ 
+        <div class="auth-card-body">
+          <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1.75rem;">
+            <div style="width:6px;height:6px;border-radius:50%;background:#fbbf24;box-shadow:0 0 8px #fbbf24;flex-shrink:0;"></div>
+            <span style="font-family:var(--mono);font-size:0.65rem;color:var(--text-3);letter-spacing:0.12em;text-transform:uppercase;">Novo Registo — Preencha os seus dados</span>
+          </div>
+ 
+          <form id="formRegister" autocomplete="off">
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input class="form-control" id="inputFirstName" type="text" />
+                  <label for="inputFirstName">Primeiro Nome</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input class="form-control" id="inputLastName" type="text" />
+                  <label for="inputLastName">Último Nome</label>
+                </div>
+              </div>
+            </div>
+ 
+            <div class="mb-3">
+              <div class="form-floating">
+                <input class="form-control" id="inputEmail" type="email" />
+                <label for="inputEmail">Endereço de Email</label>
+              </div>
+            </div>
+ 
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="form-floating posicao-container-password">
+                  <input class="form-control" id="inputPassword" type="password" style="padding-right:45px;" />
+                  <label for="inputPassword">Palavra-passe</label>
+                  <button type="button" id="btnMostrarPassword" class="icone-password">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-floating">
+                  <input class="form-control" id="inputPasswordConfirm" type="password"  />
+                  <label for="inputPasswordConfirm">Confirmar Palavra-passe</label>
+                </div>
+              </div>
+            </div>
+ 
+            <!-- Password strength hint -->
+            <div style="margin-bottom:1.5rem;">
+              <div style="font-family:var(--mono);font-size:0.65rem;color:var(--text-3);letter-spacing:0.08em;margin-bottom:0.5rem;">FORÇA DA PALAVRA-PASSE</div>
+              <div style="display:flex;gap:4px;" id="strengthBars">
+                <div style="height:3px;flex:1;background:var(--border);border-radius:2px;transition:background 0.3s;" class="strength-bar"></div>
+                <div style="height:3px;flex:1;background:var(--border);border-radius:2px;transition:background 0.3s;" class="strength-bar"></div>
+                <div style="height:3px;flex:1;background:var(--border);border-radius:2px;transition:background 0.3s;" class="strength-bar"></div>
+                <div style="height:3px;flex:1;background:var(--border);border-radius:2px;transition:background 0.3s;" class="strength-bar"></div>
+              </div>
+            </div>
+ 
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary btn-block">
+                <i class="fas fa-shield-halved me-1"></i>Criar Conta Segura
+              </button>
+            </div>
+          </form>
+        </div>
+ 
+        <div class="auth-card-footer">
+          <a href="login.html">Já tem conta? Faça login</a>
+        </div>
+ 
+      </div>
+ 
+      <div style="text-align:center;margin-top:1.5rem;">
+        <span style="font-family:var(--mono);font-size:0.62rem;color:var(--text-3);letter-spacing:0.1em;">© SECUREGUARD 2026 — TODOS OS DIREITOS RESERVADOS</span>
+      </div>
+    </div>
+ 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+      // Password strength indicator
+      const pwInput = document.getElementById('inputPassword');
+      const bars = document.querySelectorAll('.strength-bar');
+      const colors = ['#dc2626','#f97316','#eab308','#4ade80'];
+      pwInput && pwInput.addEventListener('input', function() {
+        const v = this.value;
+        let score = 0;
+        if (v.length >= 8)  score++;
+        if (/[A-Z]/.test(v)) score++;
+        if (/[0-9]/.test(v)) score++;
+        if (/[^a-zA-Z0-9]/.test(v)) score++;
+        bars.forEach((b,i) => {
+          b.style.background = i < score ? colors[score-1] : 'var(--border)';
+        });
+      });
+      // Toggle password visibility
+      const btn = document.getElementById('btnMostrarPassword');
+      btn && btn.addEventListener('click', function() {
+        const inp = document.getElementById('inputPassword');
+        const icon = this.querySelector('i');
+        if(inp.type==='password'){ inp.type='text'; icon.className='fas fa-eye-slash'; }
+        else { inp.type='password'; icon.className='fas fa-eye'; }
+      });
+    </script>
+    <script src="js/scripts.js"></script>
+    <script src="js/register.js"></script>
+  </body>
 </html>
