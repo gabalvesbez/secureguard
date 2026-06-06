@@ -4,207 +4,65 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>SecureGuard — Meu Cofre</title>
-    <link href="css/styles.css" rel="stylesheet" />
-    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <title>SecureGuard — A iniciar...</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/loading.css" />
   </head>
-  <body class="sb-nav-fixed">
+  <body>
+    <div class="scanlines"></div>
  
-    <!-- TOP NAV -->
-    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-      <a class="navbar-brand ps-3" href="index.html">SecureGuard</a>
-      <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle"><i class="fas fa-bars"></i></button>
-      <div class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></div>
-      <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-user fa-fw"></i>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="#!" id="btnLogout">Sair</a></li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
+    <div class="card" id="loading-screen">
+      <div class="card-accent"></div>
+      <div class="card-inner">
  
-    <div id="layoutSidenav">
-      <!-- SIDEBAR -->
-      <div id="layoutSidenav_nav">
-        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-          <div class="sb-sidenav-menu">
-            <div class="nav">
-              <div class="sb-sidenav-menu-heading">Core</div>
-              <a class="nav-link active" href="index.html">
-                <div class="sb-nav-link-icon"><i class="fas fa-vault"></i></div>
-                Meu Cofre
-              </a>
-              <a class="nav-link" href="auditoria.html">
-                <div class="sb-nav-link-icon"><i class="fas fa-clipboard-list"></i></div>
-                Logs de Auditoria
-              </a>
-            </div>
-          </div>
-          <div class="sb-sidenav-footer">
-            <div class="small">Sessão ativa como:</div>
-            <span id="userLoggedEmail">utilizador@secureguard.com</span>
-          </div>
-        </nav>
-      </div>
+        <div class="logo">
+          <span class="logo-dot"></span>
+          <span class="logo-text">SecureGuard</span>
+        </div>
  
-      <!-- CONTENT -->
-      <div id="layoutSidenav_content">
-        <main>
-          <div class="container-fluid px-4">
- 
-            <!-- HEADER -->
-            <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
-              <div>
-                <h1>Meu Cofre</h1>
-                <p style="font-family:var(--mono);font-size:0.72rem;color:var(--text-3);margin-top:0.3rem;letter-spacing:0.06em;">CHAVES CRIPTOGRAFADAS — AES-256-GCM</p>
-              </div>
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalNovoSegredo">
-                <i class="fas fa-plus me-1"></i>Adicionar Segredo
-              </button>
-            </div>
- 
-            <!-- STATS ROW -->
-            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:1.5rem;">
-              <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;">
-                <div style="width:36px;height:36px;border-radius:var(--radius);background:var(--red-glow);border:1px solid var(--border-glow);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                  <i class="fas fa-key" style="color:var(--red-bright);font-size:0.875rem;"></i>
-                </div>
-                <div>
-                  <div style="font-family:var(--mono);font-size:0.62rem;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;">Segredos</div>
-                  <div style="font-family:var(--sans);font-weight:700;font-size:1.3rem;color:var(--text-1);" id="statTotal">—</div>
-                </div>
-              </div>
-              <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;">
-                <div style="width:36px;height:36px;border-radius:var(--radius);background:rgba(22,163,74,0.1);border:1px solid rgba(22,163,74,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                  <i class="fas fa-shield-check" style="color:#4ade80;font-size:0.875rem;"></i>
-                </div>
-                <div>
-                  <div style="font-family:var(--mono);font-size:0.62rem;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;">Estado</div>
-                  <div style="font-family:var(--sans);font-weight:700;font-size:1rem;color:#4ade80;">Seguro</div>
-                </div>
-              </div>
-              <div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.1rem 1.3rem;display:flex;align-items:center;gap:1rem;">
-                <div style="width:36px;height:36px;border-radius:var(--radius);background:rgba(234,179,8,0.08);border:1px solid rgba(234,179,8,0.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                  <i class="fas fa-clock" style="color:#fbbf24;font-size:0.875rem;"></i>
-                </div>
-                <div>
-                  <div style="font-family:var(--mono);font-size:0.62rem;color:var(--text-3);letter-spacing:0.1em;text-transform:uppercase;">Sessão</div>
-                  <div style="font-family:var(--mono);font-size:0.8rem;color:var(--text-1);" id="statSession">Ativa</div>
-                </div>
-              </div>
-            </div>
- 
-            <!-- TABLE CARD -->
-            <div class="card mb-4">
-              <div class="card-header">
-                <i class="fas fa-database me-1"></i>
-                Chaves Criptografadas Ativas
-              </div>
-              <div class="card-body">
-                <table id="tabelaSegredos" class="table table-striped table-bordered">
-                  <thead>
-                    <tr>
-                      <th>Título</th>
-                      <th>Serviço / Aplicação</th>
-                      <th>Segredo Protegido</th>
-                      <th>Criado Em</th>
-                      <th>Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody id="corpoTabelaSegredos">
-                    <tr>
-                      <td colspan="5" class="text-center text-muted" style="padding:2rem;">
-                        <i class="fas fa-lock" style="font-size:1.5rem;color:var(--text-3);display:block;margin-bottom:0.75rem;"></i>
-                        A carregar os teus segredos protegidos...
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
- 
-          </div>
-        </main>
- 
-        <footer class="py-4 bg-light mt-auto">
-          <div class="container-fluid px-4">
-            <div class="d-flex align-items-center justify-content-between small">
-              <div class="text-muted">© SecureGuard 2026 — Encriptação de ponta a ponta</div>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div>
- 
-    <!-- MODAL: Novo Segredo -->
-    <div class="modal fade" id="modalNovoSegredo" tabindex="-1" aria-labelledby="modalNovoSegredoLabel" aria-hidden="true">
-      <div class="modal-backdrop" id="modalBackdrop"></div>
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="modalNovoSegredoLabel">
-              <i class="fas fa-vault me-1" style="color:var(--red-bright);"></i>
-              Guardar Novo Segredo
-            </h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-content-body p-4">
-            <form id="formNovoSegredo">
-              <div class="mb-3">
-                <label for="inputTitulo" class="form-label">Título Identificador</label>
-                <input type="text" class="form-control" id="inputTitulo" placeholder="Ex: Chave API Stripe Produção" required>
-              </div>
-              <div class="mb-3">
-                <label for="inputServico" class="form-label">Serviço / Sistema</label>
-                <input type="text" class="form-control" id="inputServico" placeholder="Ex: Stripe" required>
-              </div>
-              <div class="mb-3">
-                <label for="inputValor" class="form-label">Valor do Segredo <span style="color:var(--text-3);font-weight:normal;">(Será encriptado)</span></label>
-                <textarea class="form-control" id="inputValor" rows="3" placeholder="Cole aqui a senha, token ou chave privada" required></textarea>
-              </div>
-              <div class="d-flex justify-content-end gap-2" style="margin-top:1.25rem;">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">
-                  <i class="fas fa-lock me-1"></i>Criptografar e Guardar
-                </button>
-              </div>
-            </form>
+        <div class="lock-wrap">
+          <div class="lock-ring" id="lockRing">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" id="lockIcon">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
           </div>
         </div>
+ 
+        <div class="status-label">Estado do Sistema</div>
+        <div class="status-message" id="statusMessage">A estabelecer ligação segura...</div>
+ 
+        <div class="progress-track">
+          <div class="progress-fill indeterminate" id="progressFill"></div>
+        </div>
+        
+        <div class="terminal" id="terminal">
+        <div class="log-line err">
+            <span class="log-prefix">[AVISO]</span>
+            <span>Servidor em plano gratuito. O Cold Start pode demorar ~50s.</span>
+        </div>
+        </div>
+ 
+        <div class="attempt-row" id="attemptDots">
+          <div class="attempt-dot active" id="dot-0"></div>
+          <div class="attempt-dot" id="dot-1"></div>
+          <div class="attempt-dot" id="dot-2"></div>
+          <div class="attempt-dot" id="dot-3"></div>
+          <div class="attempt-dot" id="dot-4"></div>
+        </div>
+ 
+      </div>
+      <div class="card-footer">
+        <span class="footer-badge">SecureGuard © 2026</span>
+        <span class="footer-status">
+          <span class="footer-status-dot" id="footerDot"></span>
+          <span id="footerLabel">A ligar...</span>
+        </span>
       </div>
     </div>
  
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
- 
-    <!-- Sidebar toggle -->
-    <script>
-      document.getElementById('sidebarToggle') && document.getElementById('sidebarToggle').addEventListener('click', function() {
-        const nav = document.getElementById('layoutSidenav_nav');
-        const content = document.getElementById('layoutSidenav_content');
-        if(nav.style.display === 'none') {
-          nav.style.display = '';
-          content.style.marginLeft = 'var(--sidebar-w)';
-        } else {
-          nav.style.display = 'none';
-          content.style.marginLeft = '0';
-        }
-      });
- 
-      // Live clock for session stat
-      function updateClock() {
-        const now = new Date();
-        const el = document.getElementById('statSession');
-        if(el) el.textContent = now.toLocaleTimeString('pt-PT', {hour:'2-digit',minute:'2-digit'});
-      }
-      updateClock();
-      setInterval(updateClock, 1000);
-    </script>
- 
-    <script src="js/scripts.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="js/health-check.js"></script>
   </body>
-</html>
+</html>    
