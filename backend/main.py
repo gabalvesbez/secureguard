@@ -157,3 +157,8 @@ def rota_listar_logs(
 ):
     # Retorna o histórico de ações do usuário atual
     return crud.listar_logs_do_utilizador(db=db, utilizador_id=utilizador_atual.id)
+
+
+@app.get("/health")
+def health_check():
+    return {"status": "healthy", "message": "SecureGuard Backend is awake"}
