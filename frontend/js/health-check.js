@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     // 1. URL da tua API no Render (Lembra-te de colocar o teu ID real do Render aqui!)
-    const BACKEND_URL = "https://O-TEU-LINK-DO-RENDER.onrender.com";
+    const BACKEND_URL = "https://secureguard-fyln.onrender.com";
  
     // Elementos do DOM para animar o ecrã
     const statusMessage = document.getElementById("statusMessage");
