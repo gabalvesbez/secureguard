@@ -27,7 +27,7 @@ document.getElementById('formRegister').addEventListener('submit', async functio
 
     try {
         // 4. O carteiro faz a viagem até à API e AGUARDA (await)
-        const resposta = await fetch('https://secureguard-fyln.onrender.com/auth/register', {
+        const resposta = await fetch('https://secureguard-fyln.onrender.com /auth/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
