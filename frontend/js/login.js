@@ -20,7 +20,7 @@ document.getElementById('formLogin').addEventListener('submit', async (e) => {
         if (response.ok) {
             localStorage.setItem('secureguard_token', data.access_token);
             localStorage.setItem('secureguard_email', email);
-            window.location.href = 'index.html'; // Vai para o cofre
+            window.location.href = 'dashboard.html'; // Vai para o cofre
         } else {
             alert(`Falha no login: ${data.detail || 'Credenciais inválidas'}`);
         }
