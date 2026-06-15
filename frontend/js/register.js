@@ -1,75 +1,107 @@
-// ==========================================
-// FORMULÁRIO DE REGISTO (SUBMISSÃO ASYNC)
-// ==========================================
-document.getElementById('formRegister').addEventListener('submit', async function(e) {
-    
-    // 1. Travamos o recarregamento automático da página
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", function () {
 
-    // 2. Lemos os dados reais do ecrã (Corrigido com .value!)
-    const emailDigitado = document.getElementById('inputEmail').value;
-    const passwordDigitada = document.getElementById('inputPassword').value;
-    const primeiroNome = document.getElementById('inputFirstName').value;
-    const ultimoNome = document.getElementById('inputLastName').value;
-    
-    // Juntamos o nome e o sobrenome numa única string de texto limpa
-    const nomeCompleto = primeiroNome + " " + ultimoNome;
+    // ==========================================
+    // TOGGLE DE VISIBILIDADE DA PASSWORD
+    // ==========================================
+    const campoPassword = document.getElementById('inputPassword');
+    const botaoOlho = document.getElementById('btnMostrarPassword');
 
-    // 3. Criamos o objeto exato que o teu Backend (schemas.py) espera
-    const dadosParaOBackend = {
-        nome: nomeCompleto, // Corrigido!
-        email: emailDigitado,
-        password: passwordDigitada,
-        cargo: "operador"
-    };
-
-    console.log("A enviar os dados para o Python...", dadosParaOBackend);
-
-    try {
-        // 4. O carteiro faz a viagem até à API e AGUARDA (await)
-        const resposta = await fetch('https://secureguard-fyln.onrender.com /auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(dadosParaOBackend)
+    if (botaoOlho && campoPassword) {
+        botaoOlho.addEventListener('click', function (e) {
+            e.preventDefault();
+            const icone = botaoOlho.querySelector('i');
+            if (campoPassword.type === 'password') {
+                campoPassword.type = 'text';
+                if (icone) { icone.classList.remove('fa-eye'); icone.classList.add('fa-eye-slash'); }
+            } else {
+                campoPassword.type = 'password';
+                if (icone) { icone.classList.remove('fa-eye-slash'); icone.classList.add('fa-eye'); }
+            }
         });
-
-        // 5. Desembalamos a resposta do Python
-        const dadosRecebidos = await resposta.json();
-
-        // 6. Verificamos se o FastAPI aceitou o registo
-        if (resposta.ok) {
-            console.log("🎉 Utilizador criado com sucesso no Supabase:", dadosRecebidos);
-            alert("Conta criada com sucesso! Podes fazer login.");
-            
-            // Comentado para poderes analisar a consola sem que a página fuja!
-            // window.location.href = "login.html";
-        } else {
-            console.error("O backend recusou o registo:", dadosRecebidos);
-            alert(`Erro no registo: ${dadosRecebidos.detail || "Verifica os dados."}`);
-        }
-
-    } catch (error) {
-        console.error("Erro catastrófico de rede:", error);
-        alert("Não foi possível conectar ao servidor. Garante que o Python está ligado!");
     }
-});
 
-const campoPassword = document.getElementById('inputPassword');
-const botaoOlho = document.getElementById('btnMostrarPassword');
+    // ==========================================
+    // INDICADOR DE FORÇA DA PASSWORD
+    // ==========================================
+    const bars = document.querySelectorAll('.strength-bar');
+    const colors = ['#dc2626', '#f97316', '#eab308', '#4ade80'];
 
-botaoOlho.addEventListener('click', function(e) {
-    e.preventDefault();
-    const icone = botaoOlho.querySelector('i');
-    
-    if (campoPassword.type === 'password') {
-        campoPassword.type = 'text';
-        icone.classList.remove('fa-eye');
-        icone.classList.add('fa-eye-slash');
-    } else {
-        campoPassword.type = 'password';
-        icone.classList.remove('fa-eye-slash');
-        icone.classList.add('fa-eye');
+    if (campoPassword && bars.length) {
+        campoPassword.addEventListener('input', function () {
+            const v = this.value;
+            let score = 0;
+            if (v.length >= 8)           score++;
+            if (/[A-Z]/.test(v))         score++;
+            if (/[0-9]/.test(v))         score++;
+            if (/[^a-zA-Z0-9]/.test(v))  score++;
+            bars.forEach((b, i) => {
+                b.style.background = i < score ? colors[score - 1] : 'var(--border)';
+            });
+        });
     }
+
+    // ==========================================
+    // FORMULÁRIO DE REGISTO (SUBMISSÃO ASYNC)
+    // ==========================================
+    const formRegister = document.getElementById('formRegister');
+
+    if (formRegister) {
+        formRegister.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const emailDigitado    = document.getElementById('inputEmail').value.trim();
+            const passwordDigitada = document.getElementById('inputPassword').value;
+            const passwordConfirm  = document.getElementById('inputPasswordConfirm').value;
+            const primeiroNome     = document.getElementById('inputFirstName').value.trim();
+            const ultimoNome       = document.getElementById('inputLastName').value.trim();
+            const nomeCompleto     = `${primeiroNome} ${ultimoNome}`.trim();
+
+            // Validação básica client-side antes de ir ao servidor
+            if (!nomeCompleto || !emailDigitado || !passwordDigitada) {
+                alert("Por favor preenche todos os campos obrigatórios.");
+                return;
+            }
+            if (passwordDigitada !== passwordConfirm) {
+                alert("As palavras-passe não coincidem.");
+                return;
+            }
+            if (passwordDigitada.length < 8) {
+                alert("A palavra-passe deve ter pelo menos 8 caracteres.");
+                return;
+            }
+
+            const dadosParaOBackend = {
+                nome:     nomeCompleto,
+                email:    emailDigitado,
+                password: passwordDigitada,
+                cargo:    "operador"
+            };
+
+            console.log("A enviar os dados para o backend...", dadosParaOBackend);
+
+            try {
+                const resposta = await fetch('https://secureguard-fyln.onrender.com/auth/register', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify(dadosParaOBackend)
+                });
+
+                const dadosRecebidos = await resposta.json();
+
+                if (resposta.ok) {
+                    console.log("Utilizador criado com sucesso:", dadosRecebidos);
+                    alert("Conta criada com sucesso! Podes fazer login.");
+                    window.location.href = "login.html";
+                } else {
+                    console.error("O backend recusou o registo:", dadosRecebidos);
+                    alert(`Erro no registo: ${dadosRecebidos.detail || "Verifica os dados."}`);
+                }
+
+            } catch (error) {
+                console.error("Erro de rede:", error);
+                alert("Não foi possível conectar ao servidor. Verifica a tua ligação.");
+            }
+        });
+    }
+
 });
